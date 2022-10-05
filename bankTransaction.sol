@@ -2,26 +2,37 @@
 
 pragma solidity >0.8.1;
 
+/* 
+Two possible approaches:
+    1.) create transactionss[] array with elements being of the transaction object
+    2.) map transactions to a unique id for each transacton
+        The transaction identifier can either be:
+            i.)  Combination of deterministic letters and numbers, requires an extra array for case 2 above to track the ID's
+            ii.) Incrementing an integer gradualy; "cheap" for option 2
+Commented out option 1 compiled option 2
+ */
 contract BankTransaction{
     struct Transaction{
-        string ID; //payment identifier
+        uint ID; //payment identifier from 0...n0x5B38Da6a701c568545dCfcB03FcB875f56beddC4
         address client;
         address payable recipient;
         uint amount;
         uint timestamp;
         string note;
-        string hashed;// hash value of payment
+        bytes32 hashed;// hash value of payment
     }
 
-    Transaction[] public transactions;
-    mapping (string=>Transaction) txs;
+    // Transaction[] public transactions;
+    mapping (uint=>Transaction) txs;
+    uint public count = 0;
 
 //Adding a new payment
     function addTransaction(address payable receiver, uint amount, string memory note) public {
         uint time = block.timestamp;
-        transactions.push(
+        uint id = generateID();
+        /* transactions.push(
             Transaction({
-                ID: "",
+                ID: id,
                 client: msg.sender,
                 recipient: receiver,
                 amount: amount,
@@ -29,42 +40,45 @@ contract BankTransaction{
                 note: note,
                 hashed: ""
             })
-        );
-        /* txs[generateID(_hash)] = Transaction(
+        ); */
+        txs[id] = Transaction(
             {
-                ID: generateID(_hash),
+                ID: id,
                 client: msg.sender,
                 recipient: receiver,
                 amount: amount,
                 timestamp: time,
                 note: note,
-                hashed: _hash
+                hashed: keccak256(bytes.concat(abi.encodePacked(time),abi.encodePacked(msg.sender),abi.encodePacked(receiver),abi.encodePacked(amount)))
             }
-        ); */
+        );
     }
-//Create hash from ID
-    /* function createHash(address client, address receiver,uint amount, uint time) public pure returns (bytes memory){
-        return keccak256(abi.encodePacked(string.concat(string(bytes(client)),string(receiver),string(amount),string(time))));
-    } */
-//Generate transaction ID from hash
-    /* function generateID(bytes memory hashed) public pure returns (string memory){
-        return string(hashed[2:10]);
-    } */
+//Generate transaction ID 
+    function generateID() public returns (uint){
+        count+=1;
+        return count;
+    }
 
 //Getting information about the payment by it's identifier
-    function getTransaction(string memory id) public view returns(Transaction memory){
-        for (uint256 i = 0; i < transactions.length; i++) {
+    function getTransaction(uint id) public view returns(Transaction memory){
+        /* for (uint256 i = 0; i < transactions.length; i++) {
             if(keccak256(abi.encodePacked(transactions[i].ID))==keccak256(abi.encodePacked(id))){
                 return transactions[i];
             }
-        }
+        } */
         return txs[id];
     }
 //Getting all payments of a particular customer
-    function getClientInfo(address client) public view returns(Transaction memory){
-        for (uint256 i = 0; i < transactions.length; i++) {
+    function getClientInfo(address client) public view returns(Transaction memory clientTxs){
+        /* for (uint256 i = 0; i < transactions.length; i++) {
             if(transactions[i].client==client){
                 return transactions[i];
+            }
+        } */
+        for (uint256 i = 1; i < count; i++) {
+            if(txs[i].client==client){
+                // clientTxs.append(txs[i]);
+                clientTxs = txs[i];
             }
         }
     }
