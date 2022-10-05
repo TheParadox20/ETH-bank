@@ -69,16 +69,16 @@ contract BankTransaction{
         return txs[id];
     }
 //Getting all payments of a particular customer
-    function getClientInfo(address client) public view returns(Transaction memory clientTxs){
+    function getClientInfo(address client) public view returns(Transaction memory){
         /* for (uint256 i = 0; i < transactions.length; i++) {
             if(transactions[i].client==client){
                 return transactions[i];
             }
         } */
-        for (uint256 i = 1; i < count; i++) {
+        for (uint256 i = 0; i <= count; i++) {
             if(txs[i].client==client){
                 // clientTxs.append(txs[i]);
-                clientTxs = txs[i];
+                return txs[i];
             }
         }
     }
