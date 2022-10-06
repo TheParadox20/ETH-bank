@@ -69,16 +69,19 @@ contract BankTransaction{
         return txs[id];
     }
 //Getting all payments of a particular customer
-    function getClientInfo(address client) public view returns(Transaction memory clientTxs){
+    function getClientInfo(address client) public view returns(Transaction[] memory clientTxs){
         /* for (uint256 i = 0; i < transactions.length; i++) {
             if(transactions[i].client==client){
                 return transactions[i];
             }
         } */
+        uint8 x = 0;
         for (uint256 i = 0; i <= count; i++) {
             if(txs[i].client==client){
-                // clientTxs.append(txs[i]);
-                clientTxs = txs[i];
+                require(x!=5, "Can only pull the first 5 transactions");
+                clientTxs[x]=(txs[i]);
+                x+=1;
+                // clientTxs = txs[i];
             }
         }
     }
