@@ -75,7 +75,7 @@ contract BankTransaction{
                 return transactions[i];
             }
         } */
-        uint8 x = 0;
+        uint8 x = 0; //variable to point to index to store transaction in array
         for (uint256 i = 0; i <= count; i++) {
             if(txs[i].client==client){
                 require(x!=5, "Can only pull the first 5 transactions");
@@ -84,5 +84,12 @@ contract BankTransaction{
                 // clientTxs = txs[i];
             }
         }
+    }
+//Additional task
+    function additionalTask() public pure returns(uint answer){
+        uint a = 3;
+        uint b = 2;
+        uint accuracy = 10**8;
+        answer = (a*accuracy)/(b); //on fronten divide answer by accuracy
     }
 }
