@@ -1,0 +1,116 @@
+\documentclass[10pt]{article}
+\usepackage{amsmath}
+\usepackage{array}
+\usepackage[legalpaper, margin=0.5in]{geometry} % Adjusted margins
+\usepackage{graphicx}
+
+\title{\textbf{Linear Optimization Set 1, Question 1.}}
+\author{\textbf{Student Name: Erla Priyanka}}
+\date{\textbf{Student ID: 1606063}}
+
+\begin{document}
+\sloppy % Allow more flexible spacing
+
+\maketitle
+
+\section*{Blend Problem: Maximizing Profit for Motor Oil Production}
+
+\subsection*{Objective}
+Determine the optimal mix of components in each motor oil grade (Super, Premium, and Extra) to maximize profit.
+
+\subsection*{Decision Variables}
+Let:
+\begin{itemize}
+    \item \( x_{1S}, x_{2S}, x_{3S} \) = barrels of components 1, 2, and 3 used in Super grade, respectively.
+    \item \( x_{1P}, x_{2P}, x_{3P} \) = barrels of components 1, 2, and 3 used in Premium grade, respectively.
+    \item \( x_{1E}, x_{2E}, x_{3E} \) = barrels of components 1, 2, and 3 used in Extra grade, respectively.
+\end{itemize}
+
+\subsection*{Objective Function}
+Maximize profit \( Z \):
+\[
+Z = [23(x_{1S} + x_{2S} + x_{3S}) + 20(x_{1P} + x_{2P} + x_{3P}) 
++ 18(x_{1E} + x_{2E} + x_{3E})] - [12(x_{1S} + x_{1P} + x_{1E}) 
++ 10(x_{2S} + x_{2P} + x_{2E}) + 14(x_{3S} + x_{3P} + x_{3E})]
+\]
+
+\subsection*{Constraints}
+
+\begin{enumerate}
+    \item \textbf{Component Availability:}
+    \begin{align*}
+    x_{1S} + x_{1P} + x_{1E} &\leq 4500 \\
+    x_{2S} + x_{2P} + x_{2E} &\leq 2700 \\
+    x_{3S} + x_{3P} + x_{3E} &\leq 3500
+    \end{align*}
+
+    \item \textbf{Grade Specifications:}
+    \begin{itemize}
+        \item \textbf{Super:}
+        \begin{align*}
+        x_{1S} &\geq 0.5(x_{1S} + x_{2S} + x_{3S}) \\
+        x_{2S} &\leq 0.3(x_{1S} + x_{2S} + x_{3S})
+        \end{align*}
+        \item \textbf{Premium:}
+        \begin{align*}
+        x_{1P} &\geq 0.4(x_{1P} + x_{2P} + x_{3P}) \\
+        x_{3P} &\leq 0.25(x_{1P} + x_{2P} + x_{3P})
+        \end{align*}
+        \item \textbf{Extra:}
+        \begin{align*}
+        x_{1E} &\geq 0.6(x_{1E} + x_{2E} + x_{3E}) \\
+        x_{2E} &\geq 0.1(x_{1E} + x_{2E} + x_{3E})
+        \end{align*}
+    \end{itemize}
+
+    \item \textbf{Production Limits:}
+    \begin{align*}
+    x_{1S} + x_{2S} + x_{3S} &\leq 3000 \\
+    x_{1P} + x_{2P} + x_{3P} &\leq 3000 \\
+    x_{1E} + x_{2E} + x_{3E} &\leq 3000
+    \end{align*}
+\end{enumerate}
+
+\subsection*{Methodology}
+
+\begin{enumerate}
+    \item \textbf{Formulate the Linear Program:}
+    \begin{itemize}
+        \item Objective Function: \( Z \)
+        \item Constraints: Component Availability, Grade Specifications, Production Limits
+    \end{itemize}
+
+    \item \textbf{Use a Solver:}
+    \begin{itemize}
+        \item Apply optimization using Excel Solver
+    \end{itemize}
+\end{enumerate}
+
+\subsection*{Solution}
+Optimal Mix (in barrels per day):
+
+\begin{tabular}{|c|c|c|c|}
+\hline
+Grade & Component 1 & Component 2 & Component 3 \\
+\hline
+Super & 1700 & 1000 & 700 \\
+Premium & 2200 & 0 & 800 \\
+Extra & 500 & 1700 & 0 \\
+\hline
+\end{tabular}
+
+\subsection*{Optimized Maximum Profit}
+\$52,400 per day.
+
+% Existing screenshots
+\begin{center}
+    \includegraphics[width=\textwidth]{Q1.PNG} 
+\end{center} 
+\vspace{30pt}
+
+\begin{center}
+    \includegraphics[width=\textwidth]{Q12.PNG} 
+\end{center} 
+
+
+\end{document}
